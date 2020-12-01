@@ -1,0 +1,27 @@
+svg {
+  display:block;
+  width:600;
+  height:800;
+  position:absolute;
+  left:55%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  animation: pulse 2s ease-in-out;
+}
+
+.tree {
+  fill: #222F3E;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 1;
+  }
+}

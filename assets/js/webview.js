@@ -14,6 +14,5 @@ function doLayout() {
   let controlsHeight = getControlsHeight();
   let webviewHeight = windowHeight - controlsHeight;
 
-  webview.style.width = windowWidth + "px";
-  webview.style.height = webviewHeight + "px";
+
 }

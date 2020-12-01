@@ -1,6 +1,6 @@
 {
   "name": "easynote-app",
-  "version": "1.0.0",
+  "version": "1.0.9",
   "description": "",
   "main": "main.js",
   "repository": {
@@ -13,6 +13,21 @@
     "build": "electron-builder build --win --publish never",
     "deploy": "electron-builder build --win --publish always"
   },
+  "build": {
+    "productName": "Easynote",
+    "target": "NSIS",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icons/win/icon.ico"
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "installerIcon": "assets/icons/win/icon.ico",
+      "installerHeaderIcon": "assets/icons/win/icon.ico",
+      "deleteAppDataOnUninstall": true
+    }
+  },
   "author": "Easynote",
   "license": "ISC",
   "devDependencies": {
@@ -20,6 +35,8 @@
     "electron-builder": "^20.44.2"
   },
   "dependencies": {
+    "@trodi/electron-splashscreen": "^1.0.0",
+    "custom-electron-titlebar": "^3.2.5",
     "electron-updater": "^4.3.5"
   }
 }

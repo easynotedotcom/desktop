@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <head>
-  <title>Easynote App</title>
+  <title>Easynote</title>
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/topbar.css" />
   <script src="assets/js/webview.js"></script>
   <script src="assets/js/topbar.js"></script>
   <style>
+    .parent{
+      width: 100%;
+  height: 100%;
+    }
+    #webview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-bottom: 50px;
+  width: 100%;
+  height: 100%;
+  display: inline-flex !important;
+}
+
+    
     #notification {
       position: fixed;
       bottom: 20px;
@@ -22,12 +37,13 @@
   </style>
 </head>
 <body>
+  <div class="parent">
   <webview
   id="webview"
-  autosize="on"
   src="https://beta-app.easynote.com"
   data-home="https://beta-app.easynote.com"
 ></webview>
+</div>
 
   <div id="notification" class="hidden">
     <p id="message"></p>
@@ -38,6 +54,7 @@
       Restart
     </button>
   </div>
+  <script src="assets/js/preload.js"></script>
   <script>
     const { ipcRenderer } = require('electron');
     const version = document.getElementById('version');

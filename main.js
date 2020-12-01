@@ -1,12 +1,23 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const { app, dialog, ipcRenderer, BrowserWindow, Menu, ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require("path");
 const fs = require("fs");
+const version = app.getVersion()
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let childWindow;
 let initPath;
 const template = [
+
+  
+  {
+    label: 'File',
+    submenu: [
+    { role: 'close' }
+    ]
+  },
+
   {
     label: "Edit",
     submenu: [
@@ -36,8 +47,25 @@ const template = [
     ],
   },
   {
-    role: "window",
-    submenu: [{ role: "minimize" }, { role: "close" }],
+    role: "Help",
+    submenu: [
+      { label: "Get Started With Easynote",
+      click: async () => {
+        const { shell } = require('electron')
+        await shell.openExternal('https://www.youtube.com/watch?v=OkPqo-7Xglc&ab_channel=Easynote')
+      } },
+      { label: "About",
+        click(){
+          const { shell } = require('electron')
+          dialog.showMessageBox({
+           width: 800,
+           height: 600,
+           icon:path.join(__dirname, "assets/icons/png/512x512.png"),
+           message: 'Copyright: Easynote AB                                   ' +
+                    'Website: easynote.com',
+           detail: 'Version ' + version + ' Developed by Lukas Tucker @ Easynote',
+           title: 'Easynote'})
+        }}],
   },
 ];
 
@@ -45,7 +73,6 @@ if (process.platform === "darwin") {
   template.unshift({
     label: app.name,
     submenu: [
-      { role: "about" },
       { type: "separator" },
       { role: "services", submenu: [] },
       { type: "separator" },
@@ -68,8 +95,8 @@ if (process.platform === "darwin") {
 
   // Window menu
   template[3].submenu = [
-    { role: "close" },
-    { role: "minimize" },
+    { role: "Get Started" },
+    { role: "About" },
     { role: "zoom" },
     { type: "separator" },
     { role: "front" },
@@ -84,7 +111,10 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
-    icon: path.join(__dirname, "assets/icons/png/64x64.png"),
+    show: false,
+    frame:false,
+    titleBarStyle: 'hidden',
+    icon: path.join(__dirname, "assets/icons/win/icon.ico"),
     backgroundColor: "#fff",
     webPreferences: {
       nodeIntegration: true,
@@ -94,20 +124,42 @@ function createWindow () {
       enableRemoteModule: true,
     },
   });
+  childWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    frame: false,
+    transparent:true
+  });
+
   mainWindow.loadFile('index.html');
+  childWindow.loadFile('splash.html');
+
+  childWindow.on('closed', function () {
+    childWindow = null;
+  });
+  childWindow.once('ready-to-show', () => {
+    childWindow.show()
+  });
+  
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
+
   mainWindow.once('ready-to-show', () => {
     autoUpdater.checkForUpdatesAndNotify();
+    setTimeout(function() {
+      mainWindow.show()}, 3000);
+      setTimeout(function() {
+        childWindow.close()}, 3000);
   });
 
   mainWindow.loadURL("file://" + __dirname + "/index.html");
-
+  childWindow.loadURL("file://" + __dirname + "/splash.html");
    // Display Dev Tools
   //mainWindow.openDevTools();
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
+
 }
 
 app.on('ready', () => {

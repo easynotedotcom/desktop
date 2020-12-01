@@ -1,8 +1,17 @@
 /* Main */
-
 body {
   margin: 0;
   padding: 0;
   -webkit-user-select: none;
   -webkit-app-region: drag;
+}
+.titlebar{
+  font-size: 15px !important;
+  font-family: 'Roboto', sans-serif !important;
+}
+.window-title{
+  font-size: 15px !important;
+}
+.menubar-menu-container:hover{
+  display: block !important;
 }
