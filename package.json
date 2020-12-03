@@ -1,6 +1,6 @@
 {
   "name": "easynote-app",
-  "version": "1.0.9",
+  "version": "1.1.2",
   "description": "",
   "main": "main.js",
   "repository": {
@@ -18,13 +18,13 @@
     "target": "NSIS",
     "win": {
       "target": "nsis",
-      "icon": "assets/icons/win/icon.ico"
+      "icon": "assets/icons/win/icon2.ico"
     },
     "nsis": {
       "allowToChangeInstallationDirectory": true,
       "oneClick": false,
-      "installerIcon": "assets/icons/win/icon.ico",
-      "installerHeaderIcon": "assets/icons/win/icon.ico",
+      "installerIcon": "assets/icons/win/icon2.ico",
+      "installerHeaderIcon": "assets/icons/win/icon2.ico",
       "deleteAppDataOnUninstall": true
     }
   },

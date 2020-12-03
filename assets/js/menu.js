@@ -52,7 +52,7 @@ const template = [
         click(){
           const { shell } = require('electron')
           dialog.showMessageBox({
-           icon:path.join(__dirname, "../icons/png/256x256.png"),
+           icon:path.join(__dirname, "../icons/png/Group 1768.png"),
            message: 'Copyright: Easynote AB                                   ' +
                     'Website: easynote.com',
            detail: 'Version ' + version + ' Developed by Lukas Tucker @ Easynote',

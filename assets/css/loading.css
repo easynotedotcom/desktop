@@ -10,7 +10,7 @@ svg {
 }
 
 .tree {
-  fill: #222F3E;
+  fill: #f7f7f7;
   animation: pulse 2s infinite ease-in-out;
 }
 
