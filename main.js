@@ -1,13 +1,16 @@
-const { app, dialog, ipcRenderer, BrowserWindow, Menu, ipcMain } = require('electron');
+const { app, dialog, MenuItem, BrowserWindow, Menu, ipcMain, webviewTag } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require("path");
 const fs = require("fs");
 const version = app.getVersion()
+const { menu } = require("./assets/js/menu");
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let childWindow;
 let initPath;
+const isWindows = process.platform === "win32";
+
 const template = [
 
   
@@ -117,12 +120,14 @@ function createWindow () {
     icon: path.join(__dirname, "assets/icons/win/icon.ico"),
     backgroundColor: "#fff",
     webPreferences: {
+      preload: path.join(__dirname, "/assets/js/preload.js"),
       nodeIntegration: true,
       // https://www.electronjs.org/docs/api/webview-tag
       webviewTag: true, // Security warning since Electron 10
       zoomFactor: 1.0,
       enableRemoteModule: true,
     },
+    frame: isWindows ? false : true
   });
   childWindow = new BrowserWindow({
     width: 800,
@@ -130,6 +135,8 @@ function createWindow () {
     frame: false,
     transparent:true
   });
+
+ 
 
   mainWindow.loadFile('index.html');
   childWindow.loadFile('splash.html');
@@ -159,9 +166,12 @@ function createWindow () {
   //mainWindow.openDevTools();
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
-
 }
-
+app.on("web-contents-created", (e, contents) => { 
+  if (contents.getType() == "webview") {
+    ({ window: contents, }); 
+  } 
+});
 app.on('ready', () => {
   initPath = path.join(app.getPath("userData"), "init.json");
   createWindow();
@@ -197,4 +207,25 @@ autoUpdater.on('update-downloaded', () => {
 
 ipcMain.on('restart_app', () => {
   autoUpdater.quitAndInstall();
+});
+ipcMain.on("webview-context-link", (event, data) => {
+  if (url = validateUrl(data.href)) {
+      const WebViewMenu = Menu.buildFromTemplate([{
+          label: 'Open in new tab', click(){
+              addNewTab(url)
+          }
+      }]);
+
+      WebViewMenu.popup(electron.remote.getCurrentWindow());
+  }
+});
+
+ipcMain.on(`display-app-menu`, function(e, args) {
+  if (isWindows && mainWindow) {
+    menu.popup({
+      window: mainWindow,
+      x: args.x,
+      y: args.y
+    });
+  }
 });

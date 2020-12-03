@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "@trodi/electron-splashscreen": "^1.0.0",
-    "custom-electron-titlebar": "^3.2.5",
     "electron-updater": "^4.3.5"
   }
 }
