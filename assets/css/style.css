@@ -74,17 +74,62 @@ button i {
   height: 100%;
   display: inline-flex !important;
 }
+    #close-button{
+      background-color: #54A0FF; /* Green */
+      border:2px solid white;
+      color: white;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 12px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #close-button:hover{
+      background-color:white;
+      color: #54A0FF;
+    }
 
-    
+    #restart-button{
+      background-color: white; 
+      border:2px solid white;
+      color: #54A0FF;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 12px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+      border-radius: 5px;
+    } 
+    #restart-button:hover{
+      background-color:#54A0FF;
+      color: white;
+    }
+    #title{
+      text-align: center;
+      color: white;
+      font-size: 15px;
+    }
+
+    #message{
+      color: white;
+    }
+
     #notification {
       position: fixed;
       bottom: 20px;
-      left: 20px;
-      width: 200px;
+      right: 20px;
+      width: 300px;
       padding: 20px;
       border-radius: 5px;
-      background-color: white;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      background-color: #54A0FF;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8);
     }
     .hidden {
       display: none;

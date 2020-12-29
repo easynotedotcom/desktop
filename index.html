@@ -23,17 +23,18 @@
   id="webview"
   allowpopups
   nodeintegration
-  src="https://beta-app.easynote.com"
-  data-home="https://beta-app.easynote.com"
+  src="https://app.easynote.com"
+  data-home="https://app.easynote.com"
 ></webview>
 </div>
   <div id="notification" class="hidden">
+    <p id="title" class="hidden">Update Available</p>
     <p id="message"></p>
     <button id="close-button" onClick="closeNotification()">
-      Close
+      NO, LATER
     </button>
     <button id="restart-button" onClick="restartApp()" class="hidden">
-      Restart
+      YES, RESTART NOW
     </button>
   </div>
   <script src="renderer.js"></script>
@@ -43,13 +44,7 @@
     const notification = document.getElementById('notification');
     const message = document.getElementById('message');
     const restartButton = document.getElementById('restart-button');
-    const menubtn = document.getElementsByClassName('menubar-menu-button');
-    const webview = document.querySelector('webview');
-    const div = document.querySelector('div');
-
-    function myFunction() {
-  div.classList.remove("container-after-titlebar");
-}
+    const title = document.getElementById('title');
 
     ipcRenderer.send('app_version');
     ipcRenderer.on('app_version', (event, arg) => {
@@ -60,7 +55,7 @@
     ipcRenderer.on('update_available', () => {
       ipcRenderer.removeAllListeners('update_available');
       message.innerText = 'A new update is available. Downloading now...';
-      notification.classList.remove('hidden');
+      notification.classList.add('hidden');
     });
 
     ipcRenderer.on('update_downloaded', () => {
@@ -68,12 +63,13 @@
       message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
       restartButton.classList.remove('hidden');
       notification.classList.remove('hidden');
+      title.classList.remove('hidden')
     });
 
     function closeNotification() {
       notification.classList.add('hidden');
     }
-    
+
     function restartApp() {
       ipcRenderer.send('restart_app');
     }

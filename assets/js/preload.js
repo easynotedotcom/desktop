@@ -1,6 +1,4 @@
 const { remote } = require("electron");
-const { screen } = require ('electron')
-const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 const {
   getCurrentWindow,
   openMenu,

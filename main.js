@@ -24,7 +24,7 @@ function createWindow () {
     show: false,
     frame:false,
     titleBarStyle: 'hidden',
-    icon: path.join(__dirname, "assets/icons/win/icon2.ico"),
+    icon: path.join(__dirname, "assets/icons/win/icon4.ico"),
     backgroundColor: "#fff",
     webPreferences: {
       preload: path.join(__dirname, "/assets/js/preload.js"),
@@ -37,13 +37,12 @@ function createWindow () {
     frame: isWindows ? false : true
   });
   childWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: width*.5,
+    height: height*.5,
+    icon: path.join(__dirname, "assets/icons/win/icon4.ico"),
     frame: false,
     transparent:true
   });
-
- 
 
   mainWindow.loadFile('index.html');
   childWindow.loadFile('splash.html');
@@ -60,11 +59,14 @@ function createWindow () {
   });
 
   mainWindow.once('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify();
+    setInterval(function() {
+      // your code goes here...
+      autoUpdater.checkForUpdatesAndNotify();
+  },60 * 1000); // 60 * 1000 milsec 1
     setTimeout(function() {
-      mainWindow.show()}, 3000);
+      mainWindow.show()}, 4000);
       setTimeout(function() {
-        childWindow.close()}, 3000);
+        childWindow.close()}, 4000);
   });
 
   mainWindow.loadURL("file://" + __dirname + "/index.html");
@@ -76,9 +78,11 @@ app.on("web-contents-created", (e, contents) => {
     ({ window: contents, }); 
   } 
 });
+
 app.on('ready', () => {
   initPath = path.join(app.getPath("userData"), "init.json");
   createWindow();
+  
 });
 
 app.on('window-all-closed', function () {
@@ -97,6 +101,7 @@ app.on('activate', function () {
   }
 });
 
+
 ipcMain.on('app_version', (event) => {
   event.sender.send('app_version', { version: app.getVersion() });
 });
@@ -111,17 +116,6 @@ autoUpdater.on('update-downloaded', () => {
 
 ipcMain.on('restart_app', () => {
   autoUpdater.quitAndInstall();
-});
-ipcMain.on("webview-context-link", (event, data) => {
-  if (url = validateUrl(data.href)) {
-      const WebViewMenu = Menu.buildFromTemplate([{
-          label: 'Open in new tab', click(){
-              addNewTab(url)
-          }
-      }]);
-
-      WebViewMenu.popup(electron.remote.getCurrentWindow());
-  }
 });
 
 ipcMain.on(`display-app-menu`, function(e, args) {
