@@ -45,6 +45,14 @@
     const message = document.getElementById('message');
     const restartButton = document.getElementById('restart-button');
     const title = document.getElementById('title');
+    const isMac = process.platform === "darwin";
+    const menuBar = document.getElementById('menu-bar')
+    const parent = document.getElementById('parent')
+
+    if (isMac) {
+      menuBar.style.display = "none"
+      parent.style.inset= 0
+    }
 
     ipcRenderer.send('app_version');
     ipcRenderer.on('app_version', (event, arg) => {

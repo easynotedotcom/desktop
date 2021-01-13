@@ -10,17 +10,29 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "build": "electron-builder build --win --publish never",
-    "deploy": "electron-builder build --win --publish always"
+    "build": "electron-builder build --mac --win --publish never",
+    "deploy": "electron-builder build --mac --win --publish always"
   },
   "build": {
     "productName": "Easynote",
-    "target": "NSIS",
+    "dmg": {
+      "sign": false
+    },
+    "afterSign": "./assets/js/notarize.js",
     "win": {
       "legalTrademarks": "(c) 2020 easynote.com",
       "publisherName": "Easynote AB",
       "target": "nsis",
       "icon": "./assets/icons/png/Group 1849.png"
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
+      "icon": "./assets/icons/mac/icon.icns",
+      "category":"public.app-category.utilities",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "./entitlements.mac.plist",
+      "entitlementsInherit": "./entitlements.mac.plist"
     },
     "nsis": {
       "allowToChangeInstallationDirectory": true,
@@ -31,7 +43,11 @@
       "deleteAppDataOnUninstall": true
     }
   },
-  "author": "Easynote",
+  "author":{
+    "name": "Easynote",
+    "email": "support@easynote.com",
+    "url": "https://app.easynote.com/"
+  } ,
   "license": "ISC",
   "devDependencies": {
     "electron": "^11.0.3",

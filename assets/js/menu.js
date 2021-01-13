@@ -4,9 +4,25 @@ const isMac = process.platform === "darwin";
 const version = app.getVersion()
 
 const template = [
+  // { role: 'appMenu' }
+  ...(isMac ? [{
+    label: app.name,
+    submenu: [
+      { role: 'services' },
+      { type: 'separator' },
+      { role: 'hide' },
+      { role: 'hideothers' },
+      { role: 'unhide' },
+      { type: 'separator' },
+      { role: 'quit' }
+    ]
+  }] : []),
+  // { role: 'fileMenu' }
   {
-    label: "File",
-    submenu: [isMac ? { role: "close" } : { role: "quit" }]
+    label: 'File',
+    submenu: [
+      isMac ? { role: 'close' } : { role: 'quit' }
+    ]
   },
   // { role: 'editMenu' }
   {

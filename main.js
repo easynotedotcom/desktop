@@ -10,7 +10,12 @@ let mainWindow;
 let childWindow;
 let initPath;
 
+
 const isWindows = process.platform === "win32";
+
+if (!isWindows){
+  console.log(false)
+}
 
 try {
   data = JSON.parse(fs.readFileSync(initPath, "utf8"));
@@ -39,7 +44,7 @@ function createWindow () {
   childWindow = new BrowserWindow({
     width: width*.5,
     height: height*.5,
-    icon: path.join(__dirname, "assets/icons/win/icon4.ico"),
+    icon: path.join(__dirname, "assets/icons/png/Group 1849.png"),
     frame: false,
     transparent:true
   });
