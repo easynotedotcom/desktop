@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "build": "electron-builder -mwl",
-    "release": "electron-builder build --publish never",
+    "release": "electron-builder build --publish always",
     "deploy": "electron-builder build --mac  --publish always"
   },
   "build": {
