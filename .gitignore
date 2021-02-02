@@ -1,5 +1,6 @@
+DS_STORE
 electron-builder.yml
 node_modules
 dist
 electron-builder.env
-/build
+build
