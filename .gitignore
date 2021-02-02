@@ -1,6 +1,7 @@
-DS_STORE
+.DS_STORE
 electron-builder.yml
 node_modules
 dist
 electron-builder.env
 build
+easynote.provisionprofile
