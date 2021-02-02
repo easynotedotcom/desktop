@@ -19,8 +19,10 @@ cache:
     - $HOME/.cache/electron-builder
 
 install:
-  - npm install
-  - cd other/dir && npm install
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew install yarn;
+    fi
 
 script:
   - |
