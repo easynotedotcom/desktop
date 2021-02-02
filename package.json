@@ -1,6 +1,6 @@
 {
   "name": "easynote-app",
-  "version": "1.2.7",
+  "version": "1.3.0",
   "description": "",
   "main": "main.js",
   "repository": {
@@ -10,15 +10,27 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "build": "electron-builder build --mac --win --publish never",
-    "deploy": "electron-builder build --mac --win --publish always"
+    "build": "electron-builder --mac",
+    "deploy": "electron-builder build --mac  --publish always"
   },
   "build": {
     "productName": "Easynote",
+    "afterSign": "assets/js/notarize.js",
     "dmg": {
-      "sign": false
+      "sign":false,
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     },
-    "afterSign": "./assets/js/notarize.js",
     "win": {
       "legalTrademarks": "(c) 2020 easynote.com",
       "publisherName": "Easynote AB",
@@ -26,13 +38,19 @@
       "icon": "./assets/icons/png/Group 1849.png"
     },
     "mac": {
-      "target": ["dmg", "zip"],
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "icon": "./assets/icons/mac/icon.icns",
-      "category":"public.app-category.utilities",
+      "identity": "Easynote AB (G779992Y2V)",
+      "category": "public.app-category.productivity",
+      "entitlements": "build/entitlements.mac.plist",
       "hardenedRuntime": true,
+      "provisioningProfile": "./easynote.provisionprofile",
+      "type": "distribution",
       "gatekeeperAssess": false,
-      "entitlements": "./entitlements.mac.plist",
-      "entitlementsInherit": "./entitlements.mac.plist"
+      "entitlementsInherit": "build/entitlements.mac.plist"
     },
     "nsis": {
       "allowToChangeInstallationDirectory": true,
@@ -43,18 +61,22 @@
       "deleteAppDataOnUninstall": true
     }
   },
-  "author":{
+  "author": {
     "name": "Easynote",
     "email": "support@easynote.com",
     "url": "https://app.easynote.com/"
-  } ,
+  },
   "license": "ISC",
   "devDependencies": {
-    "electron": "^11.0.3",
-    "electron-builder": "^20.44.2"
+    "electron": "^11.2.1",
+    "electron-builder": "^22.9.1",
+    "electron-notarize": "^1.0.0"
   },
   "dependencies": {
     "@trodi/electron-splashscreen": "^1.0.0",
-    "electron-updater": "^4.3.5"
+    "dotenv": "^8.2.0",
+    "electron-osx-sign": "^0.5.0",
+    "electron-updater": "^4.3.5",
+    "electron-userland": "0.0.1"
   }
 }

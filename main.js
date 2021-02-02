@@ -29,7 +29,7 @@ function createWindow () {
     show: false,
     frame:false,
     titleBarStyle: 'hidden',
-    icon: path.join(__dirname, "assets/icons/win/icon4.ico"),
+    icon: path.join(__dirname, "assets/icons/png/Group 1849.png"),
     backgroundColor: "#fff",
     webPreferences: {
       preload: path.join(__dirname, "/assets/js/preload.js"),

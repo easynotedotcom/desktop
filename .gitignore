@@ -1,5 +1,5 @@
 electron-builder.yml
 node_modules
 dist
-entitlements.plist
-.env
+electron-builder.env
+/build
