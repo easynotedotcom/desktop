@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "build": "electron-builder -mwl",
-    "release": "electron-builder build --publish always",
+    "release": "electron-builder build --publish never",
     "deploy": "electron-builder build --mac  --publish always"
   },
   "build": {
@@ -37,6 +37,8 @@
       "publisherName": "Easynote AB",
       "target": "nsis",
       "icon": "./assets/icons/png/Group 1849.png"
+    },
+    "appImage": {
     },
     "mac": {
       "target": [
