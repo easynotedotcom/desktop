@@ -1,6 +1,6 @@
 {
   "name": "easynote-app",
-  "version": "1.3.1",
+  "version": "1.3.0",
   "description": "",
   "main": "main.js",
   "repository": {
@@ -9,16 +9,22 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron .",
-    "build": "electron-builder -mwl",
+    "start": "electron --enable-transparent-visuals .",
+    "start:linux": "electron .",
+    "build:win": "electron-builder --windows",
+    "build:linux": "electron-builder --linux",
+    "build:mac": "electron-builder --mac",
     "release": "electron-builder build --publish always",
-    "deploy": "electron-builder build --mac  --publish always"
+    "deploy": "electron-builder build --mac  --publish always",
+    "deploy:win": "electron-builder --windows --publish always",
+    "deploy:linux": "electron-builder --linux --publish always",
+    "deploy:mac": "electron-builder --mac --publish always"
   },
   "build": {
     "productName": "Easynote",
     "afterSign": "assets/js/notarize.js",
     "dmg": {
-      "sign":false,
+      "sign": false,
       "contents": [
         {
           "x": 110,
@@ -38,7 +44,12 @@
       "target": "nsis",
       "icon": "./assets/icons/png/Group 1849.png"
     },
-    "appImage": {
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility",
+      "icon":"./assets/icons/png/Group 1849.png"
     },
     "mac": {
       "target": [

@@ -12,10 +12,14 @@ let initPath;
 
 
 const isWindows = process.platform === "win32";
+const isLinux = process.platform === 'linux';
 
-if (!isWindows){
-  console.log(false)
-}
+// make window transparent so custom header and splash screen is working
+if (isLinux){
+  app.commandLine.appendSwitch("enable-transparent-visuals");
+  app.commandLine.appendSwitch("disable-gpu");
+  };
+
 
 try {
   data = JSON.parse(fs.readFileSync(initPath, "utf8"));
@@ -39,7 +43,9 @@ function createWindow () {
       zoomFactor: 1.0,
       enableRemoteModule: true,
     },
-    frame: isWindows ? false : true
+    frame: isWindows ? false : true,
+    frame: isLinux ? false : true
+
   });
   childWindow = new BrowserWindow({
     width: width*.5,
@@ -48,7 +54,7 @@ function createWindow () {
     frame: false,
     transparent:true
   });
-
+  
   mainWindow.loadFile('index.html');
   childWindow.loadFile('splash.html');
 
@@ -65,9 +71,8 @@ function createWindow () {
 
   mainWindow.once('ready-to-show', () => {
     setInterval(function() {
-      // your code goes here...
       autoUpdater.checkForUpdatesAndNotify();
-  },60 * 1000); // 60 * 1000 milsec 1
+  },60 * 1000); 
     setTimeout(function() {
       mainWindow.show()}, 4000);
       setTimeout(function() {
@@ -86,8 +91,7 @@ app.on("web-contents-created", (e, contents) => {
 
 app.on('ready', () => {
   initPath = path.join(app.getPath("userData"), "init.json");
-  createWindow();
-  
+  setTimeout(function() {createWindow()},300);
 });
 
 app.on('window-all-closed', function () {
