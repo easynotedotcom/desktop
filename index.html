@@ -46,10 +46,11 @@
     const restartButton = document.getElementById('restart-button');
     const title = document.getElementById('title');
     const isMac = process.platform === "darwin";
+    const isLinux = process.platform === "linux";
     const menuBar = document.getElementById('menu-bar')
     const parent = document.getElementById('parent')
 
-    if (isMac) {
+    if (isMac || isLinux) {
       menuBar.style.display = "none"
       parent.style.inset= 0
     }

@@ -44,8 +44,6 @@ function createWindow () {
       enableRemoteModule: true,
     },
     frame: isWindows ? false : true,
-    frame: isLinux ? false : true
-
   });
   childWindow = new BrowserWindow({
     width: width*.5,
